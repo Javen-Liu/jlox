@@ -24,22 +24,24 @@ public class Scanner {
 
     static {
         KEYWORDS = new HashMap<>();
-        KEYWORDS.put("and",    AND);
-        KEYWORDS.put("class",  CLASS);
-        KEYWORDS.put("else",   ELSE);
-        KEYWORDS.put("false",  FALSE);
-        KEYWORDS.put("for",    FOR);
-        KEYWORDS.put("fun",    FUN);
-        KEYWORDS.put("if",     IF);
-        KEYWORDS.put("nil",    NIL);
-        KEYWORDS.put("or",     OR);
-        KEYWORDS.put("print",  PRINT);
-        KEYWORDS.put("return", RETURN);
-        KEYWORDS.put("super",  SUPER);
-        KEYWORDS.put("this",   THIS);
-        KEYWORDS.put("true",   TRUE);
-        KEYWORDS.put("var",    VAR);
-        KEYWORDS.put("while",  WHILE);
+        KEYWORDS.put("and",      AND);
+        KEYWORDS.put("class",    CLASS);
+        KEYWORDS.put("continue", CONTINUE);
+        KEYWORDS.put("break",    BREAK);
+        KEYWORDS.put("else",     ELSE);
+        KEYWORDS.put("false",    FALSE);
+        KEYWORDS.put("for",      FOR);
+        KEYWORDS.put("fun",      FUN);
+        KEYWORDS.put("if",       IF);
+        KEYWORDS.put("nil",      NIL);
+        KEYWORDS.put("or",       OR);
+        KEYWORDS.put("print",    PRINT);
+        KEYWORDS.put("return",   RETURN);
+        KEYWORDS.put("super",    SUPER);
+        KEYWORDS.put("this",     THIS);
+        KEYWORDS.put("true",     TRUE);
+        KEYWORDS.put("var",      VAR);
+        KEYWORDS.put("while",    WHILE);
     }
 
     public Scanner(String source) {
@@ -116,11 +118,20 @@ public class Scanner {
 
             // 若都没匹配上则最后判断是否为break、continue、数字 或者 字符，不是则抛出错误
             default:
-                if (isKeyword(c, String.valueOf(BREAK).toLowerCase())) {
-                    addToken(BREAK);
-                } else if (isKeyword(c, String.valueOf(CONTINUE).toLowerCase())) {
-                    addToken(CONTINUE);
-                } else if (isDigit(c)) {
+                // if (isKeyword(c, String.valueOf(BREAK).toLowerCase())) {
+                //     addToken(BREAK);
+                // } else if (isKeyword(c, String.valueOf(CONTINUE).toLowerCase())) {
+                //     addToken(CONTINUE);
+                // } else if (isDigit(c)) {
+                //     number();
+                // } else if (isAlpha(c)) {
+                //     identifier();
+                // }else{
+                //     Lox.error(line, "Unexpected character.");
+                // }
+                // break;
+
+                if (isDigit(c)) {
                     number();
                 } else if (isAlpha(c)) {
                     identifier();
