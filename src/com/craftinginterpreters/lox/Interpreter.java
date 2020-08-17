@@ -149,6 +149,10 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
             return ((LoxInstance) object).get(expr.name);
         }
 
+        if (object instanceof LoxClass) {
+            return ((LoxClass) object).findStaticMethod(expr.name.lexeme);
+        }
+
         throw new RuntimeError(expr.name, "Only instances have properties.");
     }
 
@@ -369,14 +373,20 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
     public Void visitClassStmt(Stmt.Class stmt) {
         environment.define(stmt.name.lexeme, null);
 
-        Map<String, LoxFunction> methods = new HashMap<>();
+        Map<String, LoxFunction> methods = new HashMap<>(10);
+        Map<String, LoxFunction> staticMethods = new HashMap<>(10);
         for (Stmt.Function method : stmt.methods) {
             LoxFunction function = new LoxFunction(method, environment,
                     "init".equals(method.name.lexeme));
+            if ("static".equals(method.kind)) {
+                staticMethods.put(method.name.lexeme, function);
+                continue;
+            }
+
             methods.put(method.name.lexeme, function);
         }
 
-        LoxClass klass = new LoxClass(stmt.name.lexeme, methods);
+        LoxClass klass = new LoxClass(stmt.name.lexeme, methods, staticMethods);
         environment.assign(stmt.name, klass);
         return null;
     }

@@ -35,8 +35,9 @@ public class Lox {
             } else if ("debug".equals(args[1])) {
                 debug = true;
                 runFile(args[0]);
+            } else {
+                System.out.println("Usage: jlox [script]");
             }
-            System.out.println("Usage: jlox [script]");
             System.exit(64);
         }else if(args.length == 1){
             runFile(args[0]);
@@ -104,6 +105,11 @@ public class Lox {
         Resolver resolver = new Resolver(INTERPRETER);
         resolver.resolve(statements);
 
+        if (hadError) {
+            System.err.println("please solve all syntax error before interpreter working");
+            return;
+        }
+
         INTERPRETER.interpret(statements);
     }
 
@@ -154,5 +160,6 @@ public class Lox {
     private static void report(int line, String where, String message) {
         System.err.println("[line " + line + "] Error " +
                 where + ": " + message);
+        hadError = true;
     }
 }

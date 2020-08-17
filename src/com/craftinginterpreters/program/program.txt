@@ -1,5 +1,8 @@
-
 class test{
+    init(){
+        print "init successful";
+    }
+
     add(a,b){
         fun multi(a,b){
             return a*b;
@@ -10,21 +13,14 @@ class test{
     addTo(a){
         return a+this.field;
     }
+
+    static minus(a){
+        return a-1;
+    }
 }
+
 
 var klass = test();
 klass.field = 1;
 print klass.addTo(4);
-
-/*
-class Person {
-  sayName() {
-    print this.name;
-  }
-}
-
-var jane = Person();
-jane.name = "Jane";
-
-jane.sayName();
-*/
+print test.minus(4);

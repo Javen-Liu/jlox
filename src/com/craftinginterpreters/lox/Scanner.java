@@ -38,6 +38,7 @@ public class Scanner {
         KEYWORDS.put("print",    PRINT);
         KEYWORDS.put("return",   RETURN);
         KEYWORDS.put("super",    SUPER);
+        KEYWORDS.put("static",   STATIC);
         KEYWORDS.put("this",     THIS);
         KEYWORDS.put("true",     TRUE);
         KEYWORDS.put("var",      VAR);

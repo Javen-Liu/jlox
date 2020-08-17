@@ -27,7 +27,8 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>{
         NONE,
         FUNCTION,
         INITIALIZER,
-        METHOD
+        METHOD,
+        STATIC
     }
 
     private enum ClassType{
@@ -179,7 +180,15 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void>{
 
         for (Stmt.Function method : stmt.methods) {
             FunctionType declaration = FunctionType.METHOD;
+
+            if ("static".equals(method.kind)) {
+                declaration = FunctionType.STATIC;
+            }
+
             if ("init".equals(method.name.lexeme)) {
+                if (declaration == FunctionType.STATIC) {
+                    Lox.error(method.name, "init method in class cannot be static.");
+                }
                 declaration = FunctionType.INITIALIZER;
             }
 

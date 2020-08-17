@@ -32,6 +32,11 @@ public class LoxInstance {
             return method.bind(this);
         }
 
+        method = klass.findStaticMethod(name.lexeme);
+        if (method != null) {
+            throw new RuntimeError(name, "Instance cannot call static method.");
+        }
+
         throw new RuntimeError(name, "Undefined property '" + name.lexeme + "'.");
     }
 

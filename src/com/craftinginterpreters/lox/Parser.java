@@ -71,6 +71,10 @@ public class Parser {
 
         List<Stmt.Function> methods = new ArrayList<>();
         while (!check(RIGHT_BRACE) && !isAtEnd()) {
+            if (match(STATIC)) {
+                methods.add(function("static"));
+                continue;
+            }
             methods.add(function("method"));
         }
 
@@ -112,7 +116,7 @@ public class Parser {
         consume(LEFT_BRACE, "Expect '{' before " + kind + " body.");
         List<Stmt> body = block();
 
-        return new Stmt.Function(name, parameters, body);
+        return new Stmt.Function(name, parameters, body, kind);
     }
 
     /**
