@@ -23,5 +23,4 @@ class test{
 var klass = test();
 klass.field = 1;
 print klass.addTo(4);
-var b = 1/0;
 print test.minus(4);
